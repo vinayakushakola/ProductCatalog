@@ -1,15 +1,10 @@
 package dev.vinayak.ProductCatalog.controllers;
 
-import dev.vinayak.ProductCatalog.dtos.ExceptionDto;
 import dev.vinayak.ProductCatalog.dtos.GenericProductDto;
 import dev.vinayak.ProductCatalog.exceptions.NotFoundException;
 import dev.vinayak.ProductCatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.html.HTMLParagraphElement;
-
 import java.util.List;
 
 @RestController
