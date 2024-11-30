@@ -1,32 +1,62 @@
 package dev.vinayak.ProductCatalog.controllers;
 
+import dev.vinayak.ProductCatalog.dtos.GenericProductDto;
+import dev.vinayak.ProductCatalog.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products/")
 public class ProductController {
+
+    private ProductService productService;
+
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService){
+        this.productService = productService;
+    }
+
     @GetMapping()
-    public String getAllProducts(){
-        return "Hello People";
+    public ResponseEntity<List<GenericProductDto>> getAllProducts(){
+        return new ResponseEntity<>(
+                productService.getAllProducts(),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("{id}")
-    public String getProductById(@PathVariable("id") Long id){
-        return "Hello People " + id;
+    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(
+            productService.getProductById(id),
+            HttpStatus.OK
+        );
     }
 
     @DeleteMapping("{id}")
-    public void deleteProductById(@PathVariable("id") Long id){
-
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(
+            productService.deleteProductById(id),
+            HttpStatus.OK
+        );
     }
 
     @PutMapping("{id}")
-    public void updateProductById(@PathVariable("id") Long id){
-
+    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product){
+        return new ResponseEntity<>(
+                productService.updateProductById(id, product),
+                HttpStatus.OK
+        );
     }
 
     @PostMapping()
-    public void createProduct(){
-
+    public ResponseEntity<GenericProductDto> createProduct(@RequestBody GenericProductDto product){
+        return new ResponseEntity<>(
+                productService.createProduct(product),
+                HttpStatus.OK
+        );
     }
 }
