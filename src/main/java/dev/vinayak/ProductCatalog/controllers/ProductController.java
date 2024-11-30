@@ -61,12 +61,4 @@ public class ProductController {
                 HttpStatus.OK
         );
     }
-
-    @ExceptionHandler(NotFoundException.class)
-    private ResponseEntity<ExceptionDto> handleNotFoundException(NotFoundException notFoundException){
-        return new ResponseEntity<>(
-                new ExceptionDto(HttpStatus.NOT_FOUND, notFoundException.getMessage()),
-                HttpStatus.NOT_FOUND
-                );
-    }
 }
