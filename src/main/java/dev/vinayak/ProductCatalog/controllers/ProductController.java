@@ -1,6 +1,8 @@
 package dev.vinayak.ProductCatalog.controllers;
 
+import dev.vinayak.ProductCatalog.dtos.ExceptionDto;
 import dev.vinayak.ProductCatalog.dtos.GenericProductDto;
+import dev.vinayak.ProductCatalog.exceptions.NotFoundException;
 import dev.vinayak.ProductCatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") Long id){
+    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") Long id) throws NotFoundException{
         return new ResponseEntity<>(
             productService.getProductById(id),
             HttpStatus.OK
@@ -37,7 +39,7 @@ public class ProductController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id){
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id) throws NotFoundException{
         return new ResponseEntity<>(
             productService.deleteProductById(id),
             HttpStatus.OK
@@ -45,7 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product){
+    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product) throws NotFoundException{
         return new ResponseEntity<>(
                 productService.updateProductById(id, product),
                 HttpStatus.OK
@@ -58,5 +60,13 @@ public class ProductController {
                 productService.createProduct(product),
                 HttpStatus.OK
         );
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    private ResponseEntity<ExceptionDto> handleNotFoundException(NotFoundException notFoundException){
+        return new ResponseEntity<>(
+                new ExceptionDto(HttpStatus.NOT_FOUND, notFoundException.getMessage()),
+                HttpStatus.NOT_FOUND
+                );
     }
 }
