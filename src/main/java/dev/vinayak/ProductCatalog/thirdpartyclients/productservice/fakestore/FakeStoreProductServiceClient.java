@@ -2,6 +2,7 @@ package dev.vinayak.ProductCatalog.thirdpartyclients.productservice.fakestore;
 
 import dev.vinayak.ProductCatalog.dtos.GenericProductDto;
 import dev.vinayak.ProductCatalog.exceptions.NotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,16 @@ import java.util.List;
 @Service
 public class FakeStoreProductServiceClient {
 
-    private String productRequestsBaseUrl = "https://fakestoreapi.com/products";
-    private String specificProductRequestsUrl = "https://fakestoreapi.com/products/{id}";
+    private String productRequestsBaseUrl; //= "https://fakestoreapi.com/products";
+    private String specificProductRequestsUrl;// = "https://fakestoreapi.com/products/{id}";
     private RestTemplateBuilder restTemplateBuilder;
 
-    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder){
+    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder,
+                                         @Value("${fakestore.api.url}") String fakeStoreApiUrl,
+                                         @Value("${fakestore.api.paths.product}") String fakeStoreProductsApiPath) {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.productRequestsBaseUrl  = fakeStoreApiUrl + fakeStoreProductsApiPath;
+        this.specificProductRequestsUrl = fakeStoreApiUrl + fakeStoreProductsApiPath + "/{id}";
     }
 
     public List<FakeStoreProductDto> getAllProducts() {
