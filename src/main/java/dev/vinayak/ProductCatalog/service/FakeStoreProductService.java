@@ -5,6 +5,7 @@ import dev.vinayak.ProductCatalog.dtos.GenericProductDto;
 import dev.vinayak.ProductCatalog.exceptions.NotFoundException;
 import dev.vinayak.ProductCatalog.thirdpartyclients.productservice.fakestore.FakeStoreProductServiceClient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Primary
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 
