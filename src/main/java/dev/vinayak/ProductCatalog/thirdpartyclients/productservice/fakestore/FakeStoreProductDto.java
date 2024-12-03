@@ -1,4 +1,4 @@
-package dev.vinayak.ProductCatalog.dtos;
+package dev.vinayak.ProductCatalog.thirdpartyclients.productservice.fakestore;
 
 import lombok.Getter;
 import lombok.Setter;
