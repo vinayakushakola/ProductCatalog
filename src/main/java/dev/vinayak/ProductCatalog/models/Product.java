@@ -1,8 +1,16 @@
 package dev.vinayak.ProductCatalog.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Builder
 @Entity(name = "tbl_products")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Product extends BaseModel{
     private String title;
     private String description;
