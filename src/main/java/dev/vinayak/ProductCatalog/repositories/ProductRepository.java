@@ -27,9 +27,10 @@ extends JpaRepository<Product, UUID> {
 
     List<Product> readAllByTitleLike(String titleRegex);
 
-    //@Query(value = CustomQueries.FIND_ALL_BY_TITLE, nativeQuery = true)
-    //List<Product> findAllByTitle(String naman);
-
     @Query(value = CustomQueries.FIND_ALL_BY_TITLE, nativeQuery = true)
-    List<Product> doSomething(String title, String currency);
+    List<Product> findAllByTitle(String naman);
+
+    //@Query("select Product from Product where Product.price.currency = :currency and Product.title = :naman")
+    //List<Product> doSomething(String naman, String currency);
 }
+
