@@ -1,7 +1,6 @@
 package dev.vinayak.ProductCatalog.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity(name = "tbl_products")
 public class Product extends BaseModel{
@@ -12,7 +11,10 @@ public class Product extends BaseModel{
     // L to R => 1 : 1
     // R to L => m : 1
     // Ans    => m : 1
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     private Category category;
-    private int price;
+
+    @JoinColumn(name = "price_id")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Price price;
 }
